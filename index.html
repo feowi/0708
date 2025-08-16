@@ -6,6 +6,7 @@
   <title>0708 - Artist Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
       font-family: 'Space Grotesk', sans-serif;
@@ -19,7 +20,6 @@
     .drawer.open {
       transform: translateX(0);
     }
-
     @media (max-width: 767px) {
       .drawer {
         transform: translateY(100%);
@@ -73,15 +73,28 @@
 
   <!-- Hero Section -->
   <div class="min-h-screen flex flex-col items-center justify-center text-center px-6">
-    <h1 class="text-6xl font-extrabold tracking-wider fade-in">0708</h1>
-    <p class="mt-4 text-lg text-gray-400 fade-in" style="animation-delay:0.5s;">
+    <h1 class="text-7xl font-extrabold tracking-wider fade-in">0708</h1>
+    <p class="mt-4 text-2xl text-gray-300 fade-in" style="animation-delay:0.5s;">
       Music artist
     </p>
     <a href="mailto:Semwind08@hotmail.com"
-       class="mt-6 inline-block bg-blue-500 hover:bg-blue-600 transition px-6 py-3 rounded-full shadow-lg fade-in"
+       class="mt-6 inline-block bg-blue-500 hover:bg-blue-600 transition px-8 py-4 rounded-full shadow-lg text-xl fade-in"
        style="animation-delay:1s;">
       Contact Me
     </a>
+
+    <!-- Social Icons -->
+    <div class="flex space-x-8 mt-8 fade-in" style="animation-delay:1.2s;">
+      <a href="https://instagram.com/yourprofile" target="_blank" class="hover:text-pink-400 transition">
+        <i data-lucide="instagram" class="w-8 h-8"></i>
+      </a>
+      <a href="https://tiktok.com/@yourprofile" target="_blank" class="hover:text-gray-200 transition">
+        <i data-lucide="music-2" class="w-8 h-8"></i>
+      </a>
+      <a href="https://youtube.com/yourchannel" target="_blank" class="hover:text-red-500 transition">
+        <i data-lucide="youtube" class="w-8 h-8"></i>
+      </a>
+    </div>
   </div>
 
   <!-- Floating Menu Button -->
@@ -96,16 +109,9 @@
 
   <!-- Sticky Spotify Button (pulsing) -->
   <a href="https://open.spotify.com/artist/YOUR-SPOTIFY-ID" target="_blank"
-     class="fixed bottom-20 right-6 bg-green-500 hover:bg-green-600 px-5 py-3 rounded-full shadow-lg text-white font-semibold transition z-40 pulse">
+     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 px-6 py-4 rounded-full shadow-lg text-lg text-white font-semibold transition z-40 pulse">
     Listen on Spotify
   </a>
-
-  <!-- Social Bar (fixed bottom) -->
-  <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-md border-t border-white/20 py-3 flex justify-center space-x-8 z-40">
-    <a href="https://instagram.com/yourprofile" target="_blank" class="hover:text-white text-gray-300">Instagram</a>
-    <a href="https://tiktok.com/@yourprofile" target="_blank" class="hover:text-white text-gray-300">TikTok</a>
-    <a href="https://youtube.com/yourchannel" target="_blank" class="hover:text-white text-gray-300">YouTube</a>
-  </div>
 
   <!-- Overlay -->
   <div id="overlay" class="hidden fixed inset-0 bg-black/60 z-40"></div>
@@ -126,6 +132,8 @@
 
   <!-- JavaScript -->
   <script>
+    lucide.createIcons();
+
     const releases = [
       {
         title: "my love",
@@ -151,11 +159,10 @@
         <a href="${r.link}" target="_blank" class="block">
           <img src="${r.img}" alt="${r.title}" class="w-full h-56 object-cover group-hover:opacity-90 transition">
           <div class="p-4">
-            <h3 class="text-lg font-semibold">${r.title}</h3>
-            <p class="text-sm text-gray-400">${r.date}</p>
+            <h3 class="text-xl font-semibold">${r.title}</h3>
+            <p class="text-md text-gray-400">${r.date}</p>
           </div>
         </a>
-        <!-- Share button -->
         <button onclick="navigator.share({title: '${r.title}', url: '${r.link}'})" 
                 class="m-3 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-sm rounded-lg transition">
           Share
