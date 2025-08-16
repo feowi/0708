@@ -6,7 +6,7 @@
   <title>0708 - Artist Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Smooth slide animation */
+    /* Drawer animations */
     .drawer {
       transform: translateX(100%);
       transition: transform 0.4s ease-in-out;
@@ -14,38 +14,51 @@
     .drawer.open {
       transform: translateX(0);
     }
+    /* Fade in */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
   </style>
 </head>
-<body class="bg-gray-900 text-white font-sans relative overflow-x-hidden">
-  
-  <!-- Main Container -->
-  <div class="min-h-screen flex flex-col items-center justify-center p-6">
-    <!-- Artist Name -->
-    <h1 class="text-5xl font-bold mb-6 animate-pulse">0708</h1>
+<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white font-sans relative overflow-x-hidden">
 
-    <!-- Contact -->
-    <a href="mailto:Semwind08@hotmail.com" 
-       class="text-lg text-blue-400 hover:text-blue-300 underline transition">
-      Contact: Semwind08@hotmail.com
+  <!-- Hero Section -->
+  <div class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+    <h1 class="text-6xl font-extrabold tracking-wider fade-in">0708</h1>
+    <p class="mt-4 text-lg text-gray-400 fade-in" style="animation-delay:0.5s;">
+      Music Artist • Producer • Creator
+    </p>
+    <a href="mailto:Semwind08@hotmail.com"
+       class="mt-6 inline-block bg-blue-500 hover:bg-blue-600 transition px-6 py-3 rounded-full shadow-lg fade-in"
+       style="animation-delay:1s;">
+      Contact Me
     </a>
-
-    <!-- Button to open menu -->
-    <button id="menuButton" 
-            class="mt-8 px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-xl shadow-lg transition">
-      See Releases
-    </button>
   </div>
 
+  <!-- Floating Menu Button -->
+  <button id="menuButton" 
+          class="fixed top-6 right-6 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" 
+         viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
   <!-- Drawer Menu -->
-  <div id="drawer" class="drawer fixed top-0 right-0 h-full w-80 bg-gray-800 shadow-2xl p-6">
+  <div id="drawer" class="drawer fixed top-0 right-0 h-full w-80 bg-white/10 backdrop-blur-xl border-l border-white/20 shadow-2xl p-6">
     <!-- Close Button -->
-    <button id="closeDrawer" class="text-white text-xl mb-6 hover:text-red-400">&times;</button>
+    <button id="closeDrawer" class="text-white text-2xl mb-6 hover:text-red-400">&times;</button>
     
-    <h2 class="text-2xl font-bold mb-4">Releases</h2>
+    <h2 class="text-2xl font-bold mb-6">Releases</h2>
     
-    <!-- Releases List -->
-    <div id="releases" class="space-y-6">
-      <!-- Dynamically filled by JS -->
+    <!-- Releases Grid -->
+    <div id="releases" class="grid gap-6">
+      <!-- Filled by JS -->
     </div>
   </div>
 
@@ -54,31 +67,31 @@
     const releases = [
       {
         title: "my love",
-        img: "https://0708.bready.lol/mylove.png", // replace with your cover
-        link: "https://open.spotify.com/album/4wWdOvtLU3IDRRQxrxdyUe?si=CRC8ndCtSCycbclP4Zyrug" // replace with real link
+        img: "https://0708.bready.lol/mylove.png",
+        link: "https://open.spotify.com/album/4wWdOvtLU3IDRRQxrxdyUe?si=CRC8ndCtSCycbclP4Zyrug"
       },
       {
         title: "HARD",
-        img: "https://0708.bready.lol/hard.png", // replace with your cover
-        link: "https://open.spotify.com/album/6j7dd9guEII6ICBhPohNvc?si=9WHkRrEyQ_iezSryA1bl_A" // replace with real link
+        img: "https://0708.bready.lol/hard.png",
+        link: "https://open.spotify.com/album/6j7dd9guEII6ICBhPohNvc?si=9WHkRrEyQ_iezSryA1bl_A"
       }
     ];
 
     const releasesContainer = document.getElementById("releases");
 
     releases.forEach(r => {
-      const releaseCard = document.createElement("div");
-      releaseCard.className = "bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:scale-105";
+      const card = document.createElement("div");
+      card.className = "group bg-white/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105";
       
-      releaseCard.innerHTML = `
-        <a href="${r.link}" target="_blank">
-          <img src="${r.img}" alt="${r.title}" class="w-full h-48 object-cover">
-          <div class="p-3">
+      card.innerHTML = `
+        <a href="${r.link}" target="_blank" class="block">
+          <img src="${r.img}" alt="${r.title}" class="w-full h-48 object-cover group-hover:opacity-90 transition">
+          <div class="p-4">
             <h3 class="text-lg font-semibold">${r.title}</h3>
           </div>
         </a>
       `;
-      releasesContainer.appendChild(releaseCard);
+      releasesContainer.appendChild(card);
     });
 
     const drawer = document.getElementById("drawer");
