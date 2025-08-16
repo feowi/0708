@@ -57,16 +57,6 @@
     .glow-hover:hover {
       box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
     }
-
-    /* Pulse animation for Spotify button */
-    .pulse {
-      animation: pulseGlow 2s infinite;
-    }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(34,197,94, 0.6); }
-      70% { box-shadow: 0 0 0 15px rgba(34,197,94, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(34,197,94, 0); }
-    }
   </style>
 </head>
 <body class="animated-bg text-white relative overflow-x-hidden">
@@ -77,11 +67,18 @@
     <p class="mt-4 text-2xl text-gray-300 fade-in" style="animation-delay:0.5s;">
       Music artist
     </p>
-    <a href="mailto:Semwind08@hotmail.com"
-       class="mt-6 inline-block bg-blue-500 hover:bg-blue-600 transition px-8 py-4 rounded-full shadow-lg text-xl fade-in"
-       style="animation-delay:1s;">
-      Contact Me
-    </a>
+
+    <!-- Buttons side by side -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-4 fade-in" style="animation-delay:1s;">
+      <a href="mailto:Semwind08@hotmail.com"
+         class="inline-block bg-blue-500 hover:bg-blue-600 transition px-8 py-4 rounded-full shadow-lg text-xl">
+        Contact Me
+      </a>
+      <a href="https://open.spotify.com/artist/YOUR-SPOTIFY-ID" target="_blank"
+         class="inline-block bg-green-500 hover:bg-green-600 transition px-8 py-4 rounded-full shadow-lg text-xl">
+        Listen on Spotify
+      </a>
+    </div>
 
     <!-- Social Icons -->
     <div class="flex space-x-8 mt-8 fade-in" style="animation-delay:1.2s;">
@@ -106,12 +103,6 @@
             d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
-
-  <!-- Sticky Spotify Button (pulsing) -->
-  <a href="https://open.spotify.com/artist/YOUR-SPOTIFY-ID" target="_blank"
-     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 px-6 py-4 rounded-full shadow-lg text-lg text-white font-semibold transition z-40 pulse">
-    Listen on Spotify
-  </a>
 
   <!-- Overlay -->
   <div id="overlay" class="hidden fixed inset-0 bg-black/60 z-40"></div>
