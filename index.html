@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>0708 - Artist Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
     /* Drawer animations */
     .drawer {
       transform: translateX(100%);
@@ -14,7 +19,33 @@
     .drawer.open {
       transform: translateX(0);
     }
-    /* Fade in */
+
+    /* Mobile: slide up from bottom */
+    @media (max-width: 767px) {
+      .drawer {
+        transform: translateY(100%);
+        right: 0;
+        left: 0;
+        width: 100% !important;
+      }
+      .drawer.open {
+        transform: translateY(0);
+      }
+    }
+
+    /* Background gradient animation */
+    .animated-bg {
+      background: linear-gradient(270deg, #1a1a1a, #111, #222, #1a1a1a);
+      background-size: 600% 600%;
+      animation: bgShift 20s ease infinite;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Fade in animation */
     .fade-in {
       opacity: 0;
       animation: fadeIn 1.2s ease forwards;
@@ -22,15 +53,20 @@
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+
+    /* Glow hover */
+    .glow-hover:hover {
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white font-sans relative overflow-x-hidden">
+<body class="animated-bg text-white relative overflow-x-hidden">
 
   <!-- Hero Section -->
   <div class="min-h-screen flex flex-col items-center justify-center text-center px-6">
     <h1 class="text-6xl font-extrabold tracking-wider fade-in">0708</h1>
     <p class="mt-4 text-lg text-gray-400 fade-in" style="animation-delay:0.5s;">
-      Music Artist
+      Music artist
     </p>
     <a href="mailto:Semwind08@hotmail.com"
        class="mt-6 inline-block bg-blue-500 hover:bg-blue-600 transition px-6 py-3 rounded-full shadow-lg fade-in"
@@ -41,7 +77,7 @@
 
   <!-- Floating Menu Button -->
   <button id="menuButton" 
-          class="fixed top-6 right-6 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition shadow-lg">
+          class="fixed top-6 right-6 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition shadow-lg z-50">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" 
          viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -49,10 +85,20 @@
     </svg>
   </button>
 
+  <!-- Sticky Spotify Button -->
+  <a href="https://open.spotify.com/artist/YOUR-SPOTIFY-ID" target="_blank"
+     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 px-5 py-3 rounded-full shadow-lg text-white font-semibold transition z-40">
+    Listen on Spotify
+  </a>
+
+  <!-- Overlay -->
+  <div id="overlay" class="hidden fixed inset-0 bg-black/60 z-40"></div>
+
   <!-- Drawer Menu -->
-  <div id="drawer" class="drawer fixed top-0 right-0 h-full w-80 bg-white/10 backdrop-blur-xl border-l border-white/20 shadow-2xl p-6">
+  <div id="drawer" 
+       class="drawer fixed bottom-0 right-0 h-full md:h-full w-full md:w-96 bg-white/10 backdrop-blur-xl border-t md:border-l border-white/20 shadow-2xl p-6 rounded-t-2xl md:rounded-none z-50">
     <!-- Close Button -->
-    <button id="closeDrawer" class="text-white text-2xl mb-6 hover:text-red-400">&times;</button>
+    <button id="closeDrawer" class="text-white text-3xl mb-6 hover:text-red-400">&times;</button>
     
     <h2 class="text-2xl font-bold mb-6">Releases</h2>
     
@@ -62,16 +108,28 @@
     </div>
   </div>
 
+  <!-- Footer with Socials -->
+  <footer class="text-center py-6 text-gray-400">
+    <p>Follow me:</p>
+    <div class="flex justify-center space-x-6 mt-2">
+      <a href="https://instagram.com/yourprofile" target="_blank" class="hover:text-white">Instagram</a>
+      <a href="https://tiktok.com/@yourprofile" target="_blank" class="hover:text-white">TikTok</a>
+      <a href="https://youtube.com/yourchannel" target="_blank" class="hover:text-white">YouTube</a>
+    </div>
+  </footer>
+
   <!-- JavaScript -->
   <script>
     const releases = [
       {
         title: "my love",
+        date: "Released Jan 2024",
         img: "https://0708.bready.lol/mylove.png",
         link: "https://open.spotify.com/album/4wWdOvtLU3IDRRQxrxdyUe?si=CRC8ndCtSCycbclP4Zyrug"
       },
       {
         title: "HARD",
+        date: "Released Feb 2024",
         img: "https://0708.bready.lol/hard.png",
         link: "https://open.spotify.com/album/6j7dd9guEII6ICBhPohNvc?si=9WHkRrEyQ_iezSryA1bl_A"
       }
@@ -81,15 +139,21 @@
 
     releases.forEach(r => {
       const card = document.createElement("div");
-      card.className = "group bg-white/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105";
+      card.className = "group bg-white/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105 glow-hover";
       
       card.innerHTML = `
         <a href="${r.link}" target="_blank" class="block">
-          <img src="${r.img}" alt="${r.title}" class="w-full h-48 object-cover group-hover:opacity-90 transition">
+          <img src="${r.img}" alt="${r.title}" class="w-full h-56 object-cover group-hover:opacity-90 transition">
           <div class="p-4">
             <h3 class="text-lg font-semibold">${r.title}</h3>
+            <p class="text-sm text-gray-400">${r.date}</p>
           </div>
         </a>
+        <!-- Share button -->
+        <button onclick="navigator.share({title: '${r.title}', url: '${r.link}'})" 
+                class="m-3 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-sm rounded-lg transition">
+          Share
+        </button>
       `;
       releasesContainer.appendChild(card);
     });
@@ -97,13 +161,21 @@
     const drawer = document.getElementById("drawer");
     const menuButton = document.getElementById("menuButton");
     const closeDrawer = document.getElementById("closeDrawer");
+    const overlay = document.getElementById("overlay");
 
     menuButton.addEventListener("click", () => {
       drawer.classList.add("open");
+      overlay.classList.remove("hidden");
     });
 
     closeDrawer.addEventListener("click", () => {
       drawer.classList.remove("open");
+      overlay.classList.add("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      drawer.classList.remove("open");
+      overlay.classList.add("hidden");
     });
   </script>
 </body>
